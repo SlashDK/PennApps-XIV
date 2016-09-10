@@ -1,0 +1,4 @@
+Fireball,c
+Lightning Bolt,b
+ice map,s,d
+mud slap,k,u,h
