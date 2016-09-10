@@ -1,0 +1,9 @@
+from pydub import AudioSegment
+
+for i in range(319):
+    sound = AudioSegment.from_wav("Clips/output%s.wav" %(str(i)))
+    if(len(sound)>=10000):
+        sound = sound[0:10000]
+    else:
+        sound = sound + AudioSegment.silent(duration=10000-len(sound))
+    sound.export("FinalClips/clip%s.wav" %(i), format="wav", bitrate = "16k")
