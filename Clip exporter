@@ -1,0 +1,48 @@
+# from pydub import AudioSegment
+import os
+
+def listFiles(path):
+    if (os.path.isdir(path) == False):
+        # base case:  not a folder, but a file, so return singleton list with its path
+        return [path]
+    else:
+        # recursive case: it's a folder, return list of all paths
+        files = [ ]
+        for filename in os.listdir(path):
+            files += listFiles(path + "/" + filename)
+        return files
+
+fileList = listFiles("dev-clean")
+currTop=None
+fileList=fileList[1:]
+filenum=0
+audioFiles=[]
+for p in fileList:
+    if(currTop==None):
+        currTop=p[10:14]
+    if(filenum==8):
+        if (currTop==p[10:14]):
+            continue
+        else:
+            currTop=p[10:14]
+            filenum=0
+    if('.DS_Store' not in p):
+        audioFiles.append(p)
+        filenum+=1
+
+print(len(audioFiles))
+for i in range(len(audioFiles)):
+    os.system("ffmpeg -i %s Clips/output%s.wav" %(audioFiles[i],i))
+    
+
+
+# sound = AudioSegment.from_mp3("speech2.mp3")
+# sound = AudioSegment.from_mp3("speech2.mp3")
+
+# len() and slicing are in milliseconds
+# i=0
+# clips = []
+# while ((i+1)*10000<len(sound)):
+#     clips.append( sound[i*10000:(i+1)*10000])
+#     clips[i].export("Clips/clip%s.mp3" %(i), format="mp3", bitrate = "16k")
+#     i+=1
