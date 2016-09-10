@@ -5,5 +5,5 @@ for i in range(319):
     if(len(sound)>=10000):
         sound = sound[0:10000]
     else:
-        sound = sound + AudioSegment.silent(duration=10000-len(sound))
+        sound = sound + AudioSegment.silent(duration=10000-len(sound)+1)
     sound.export("FinalClips/clip%s.wav" %(i), format="wav", bitrate = "16k")
